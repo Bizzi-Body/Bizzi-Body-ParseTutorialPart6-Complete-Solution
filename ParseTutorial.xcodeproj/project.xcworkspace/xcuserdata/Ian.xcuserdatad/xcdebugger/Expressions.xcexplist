@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ParseTutorial.DetailViewController.saveButton (ParseTutorial.DetailViewController)(Swift.AnyObject) -&gt; ():DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "split(capital.text + &quot; &quot; + nameEnglish.text + &quot; &quot; + nameLocal.text) {$0 == &quot; &quot;}">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ParseTutorial.DetailViewController.viewDidLoad (ParseTutorial.DetailViewController)() -&gt; ():DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "object[&quot;nameEnglish&quot;] as String">
+            </PersistentString>
+            <PersistentString
+               value = "currentObject!">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
