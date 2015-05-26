@@ -46,21 +46,37 @@ class SignUpInViewController: UIViewController {
 		var userPassword = password.text
 		
 		PFUser.logInWithUsernameInBackground(userEmailAddress, password:userPassword) {
-			(user: PFUser!, error: NSError!) -> Void in
-			if user != nil {
+			(user: PFUser?, error: NSError?) -> Void in
+
+			if user!["emailVerified"] as! Bool == true {
 				dispatch_async(dispatch_get_main_queue()) {
-					self.performSegueWithIdentifier("signInToNavigation", sender: self)
+					self.performSegueWithIdentifier(
+						"signInToNavigation",
+						sender: self
+					)
 				}
 			} else {
-				self.activityIndicator.stopAnimating()
-				
-				if let message: AnyObject = error!.userInfo!["error"] {
-					self.message.text = "\(message)"
-				}
+				// User needs to verify email address before continuing
+				let alertController = UIAlertController(
+					title: "Email address verification",
+					message: "We have sent you an email that contains a link - you must click this link before you can continue.",
+					preferredStyle: UIAlertControllerStyle.Alert
+				)
+				alertController.addAction(UIAlertAction(title: "OKAY",
+					style: UIAlertActionStyle.Default,
+					handler: { alertController in self.processSignOut()})
+				)
+				// Display alert
+				self.presentViewController(
+					alertController,
+					animated: true,
+					completion: nil
+				)
 			}
 		}
 	}
 	
+
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
