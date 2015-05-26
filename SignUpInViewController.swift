@@ -77,7 +77,7 @@ class SignUpInViewController: UIViewController {
 	}
 	
 
-	
+	// Main viewDidLoad method
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -85,6 +85,21 @@ class SignUpInViewController: UIViewController {
 		activityIndicator.hidesWhenStopped = true
 	}
 
+	
+	// Sign the current user OUT of the app
+	func processSignOut() {
+		
+		// // Sign out
+		PFUser.logOut()
+		
+		// Display sign in / up view controller
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let vc = storyboard.instantiateViewControllerWithIdentifier("SignUpInViewController") as! UIViewController
+		self.presentViewController(vc, animated: true, completion: nil)
+	}
+
+	
+	// Sign UP method that is called when once a user has accepted the terms and conditions
 	func processSignUp() {
 		
 		var userEmailAddress = emailAddress.text
@@ -109,14 +124,22 @@ class SignUpInViewController: UIViewController {
 			(succeeded: Bool, error: NSError?) -> Void in
 			if error == nil {
 				
-				dispatch_async(dispatch_get_main_queue()) {
-					self.performSegueWithIdentifier("signInToNavigation", sender: self)
-				}
+				// User needs to verify email address before continuing
+				let alertController = UIAlertController(title: "Email address verification",
+					message: "We have sent you an email that contains a link - you must click this link before you can continue.",
+					preferredStyle: UIAlertControllerStyle.Alert
+				)
+				alertController.addAction(UIAlertAction(title: "OKAY",
+					style: UIAlertActionStyle.Default,
+					handler: { alertController in self.processSignOut()})
+				)
+				// Display alert
+				self.presentViewController(alertController, animated: true, completion: nil)
 				
 			} else {
 				
 				self.activityIndicator.stopAnimating()
-			 
+				
 				if let message: AnyObject = error!.userInfo!["error"] {
 					self.message.text = "\(message)"
 				}				
